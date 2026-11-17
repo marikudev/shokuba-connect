@@ -1,0 +1,39 @@
+{
+  "_comment": "Sample chat completion response in the OpenRouter wire format, used to test the response parser without network access.",
+  "id": "gen-sample-1",
+  "model": "google/gemma-4-31b-it",
+  "provider": "Nebius",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"translations\": {\"id\": \"Besok, rapat pagi akan dilaksanakan mulai pukul 7:30. Jangan pernah masuk ke area yang dilarang masuk.\", \"my\": \"မနက်ဖြန်မေတ္တာရပ်ခံပွဲကို နံနက် ၇နာရီ၃၀ မိနစ်တွင် စတင်ကျင်းပမည်။ ဝင်ရောက်ခွင့်မရှိသောဧရိယာသို့ မည်သည့်အခါမျှ ဝင်ရောက်ခြင်းမပြုပါနှင့်။\", \"pt\": \"A reunião matinal de amanhã será realizada a partir das 7h30. Nunca entre na área proibida.\"}, \"uncertain\": []}"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 630,
+    "completion_tokens": 131,
+    "total_tokens": 761,
+    "cost": 0.0001023,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0001023,
+      "upstream_inference_prompt_cost": 6.3e-05,
+      "upstream_inference_completions_cost": 3.93e-05
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  }
+}

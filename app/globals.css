@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ececec;
+  --foreground: #000000;
+}
+
+/* Shokuba Mono palette: five grays sampled from the product
+   reference strip, plus a paper backdrop.
+   ink #000000 / coal #3F3F3F / graphite #595959 / ash #818181 /
+   mist #A0A0A0 / paper #ECECEC. Colour survives only where it
+   carries meaning: red for destructive actions, errors, and
+   the safety review signals. */
+@theme {
+  --color-ink: #000000;
+  --color-coal: #3f3f3f;
+  --color-graphite: #595959;
+  --color-ash: #818181;
+  --color-mist: #a0a0a0;
+  --color-paper: #ececec;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Every button in the app shows the pointing-hand cursor and a
+   gentle hover brightening — one global
+   rule instead of editing every component. It lives in the base
+   layer, so a component's own utilities can still override it, and
+   disabled buttons are excluded (several set
+   disabled:cursor-not-allowed themselves). */
+@layer base {
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+  button:not(:disabled):hover {
+    filter: brightness(1.08);
+  }
+  button:not(:disabled):active {
+    filter: brightness(0.96);
+  }
+}
+
+/* M4 output panels. Burmese text uses Noto Sans Myanmar (PRD section
+   6); every other panel inherits Geist, whose vietnamese subset covers
+   Vietnamese diacritics. */
+.font-output-my {
+  font-family:
+    var(--font-noto-myanmar), var(--font-geist-sans), sans-serif;
+}
+
+/* In fullscreen the panel container becomes the whole screen:
+   white background, high contrast, and the translation text grows to
+   the PRD clamp size. The banner lives outside the panel, so
+   they never appear here. */
+/* The API-key field has its own show/hide button; hide the
+   built-in reveal some browsers (Edge) add, so there is only one. */
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
+
+/* Per-panel font size (A− / A+ buttons set --panel-text-size on the
+   section). The fullscreen rule below outranks this one. */
+.output-text {
+  font-size: var(--panel-text-size, 1.125rem);
+}
+
+.output-panel:fullscreen {
+  background: #ffffff;
+  color: #000000;
+  overflow: auto;
+  padding: 2rem;
+}
+
+.output-panel:fullscreen .output-text {
+  font-size: clamp(2rem, 5vw, 6rem);
+  line-height: 1.4;
+}
+
+/* Home start button: a gentle
+   blink — a soft white ring breathing around the button — so a
+   first-time visitor is guided to press 「始める」. Slow and low
+   contrast on purpose: this screen sits in front of factory staff,
+   not a landing page competing for clicks. Reduced-motion users
+   get the static button. */
+@keyframes start-button-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+  }
+}
+
+.start-button-pulse {
+  animation: start-button-pulse 2.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .start-button-pulse {
+    animation: none;
+  }
+}
+
+/* Home logo rotator: a vertical
+   carousel beside 「AIが確認する」 — OpenAI, Google and NVIDIA
+   wordmarks slide UP one at a time. Each logo rests for 1.8 s and
+   slides for 0.5 s, so one full cycle is 3 × 2.3 s = 6.9 s; the
+   track carries a fourth slide repeating the first logo, and the
+   percentages below are quarters of the track height, which makes
+   the wrap from the last keyframe back to the first invisible.
+   Reduced-motion users see the first logo, static. */
+@keyframes logo-rotator {
+  0%,
+  26.1% {
+    transform: translateY(0);
+  }
+  33.3%,
+  59.4% {
+    transform: translateY(-25%);
+  }
+  66.7%,
+  92.8% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(-75%);
+  }
+}
+
+.logo-rotator-track {
+  animation: logo-rotator 6.9s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-rotator-track {
+    animation: none;
+  }
+}

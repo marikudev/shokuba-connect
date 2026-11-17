@@ -1,0 +1,8 @@
+# Local Workers variables for `wrangler dev`. Copy this file to
+# ".dev.vars" (git-ignored) and adjust there; values here override
+# the production vars in wrangler.jsonc for local runs only.
+#
+# Mock mode is for development and tests; production builds
+# refuse it, so a deployed Worker can never serve mock results.
+LLM_MODE=mock
+OPENROUTER_MODEL=google/gemma-4-31b-it

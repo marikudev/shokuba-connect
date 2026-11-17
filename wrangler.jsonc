@@ -1,0 +1,24 @@
+{
+  // Cloudflare Workers deployment configuration. The application
+  // code itself is platform-neutral; this file (and the OpenNext
+  // adapter) is the whole deployment layer.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "shokuba-connect",
+  "main": ".open-next/worker.js",
+  // Pinned deliberately. Advance this date only as its own step,
+  // after the full check gate passes (see docs/PANDUAN-DEPLOY.md,
+  // the Next.js upgrade protocol).
+  "compatibility_date": "2025-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  // Production values. The server reads exactly two variables;
+  // there is no app-owned API key (every operator brings their
+  // own). Local `wrangler dev` overrides live in .dev.vars.
+  "vars": {
+    "LLM_MODE": "openrouter",
+    "OPENROUTER_MODEL": "google/gemma-4-31b-it"
+  }
+}
